@@ -16,14 +16,6 @@ body {
   width: 320px;
 }
 
-.bow {
-  position: absolute;
-  top: 169px;
-  left: 556px;
-  font-size: 40px;
-  border: none;
-}
-
 .display {
   background-color: white;
   padding: 20px;
