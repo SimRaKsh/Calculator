@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Simran Cal</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="calculator">
-    <div class="display" id="display">0</div>
+    <input class="display" id="display" value="0" />
+    <button class="mode-toggle" onclick="toggleMode()"><span id="mode">DEG</span></button>
+
     <div class="buttons">
       <button class="btn" onclick="appendNumber('7')">7</button>
       <button class="btn" onclick="appendNumber('8')">8</button>
@@ -19,25 +21,31 @@
       <button class="btn" onclick="appendNumber('4')">4</button>
       <button class="btn" onclick="appendNumber('5')">5</button>
       <button class="btn" onclick="appendNumber('6')">6</button>
-      <button class="opt" onclick="addTrig('sin')">sin</button>
-      <button class="opt" onclick="addTrig('cos')">cos</button>
+      <button class="opt" onclick="addFunc('sin(')">sin</button>
+      <button class="opt" onclick="addFunc('cos(')">cos</button>
 
       <button class="btn" onclick="appendNumber('1')">1</button>
       <button class="btn" onclick="appendNumber('2')">2</button>
       <button class="btn" onclick="appendNumber('3')">3</button>
-      <button class="opt" onclick="appendOperator('*')">×</button>
-      <button class="opt" onclick="appendOperator('/')">÷</button>
-      
-      
+      <button class="opt" onclick="addFunc('tan(')">tan</button>
+      <button class="opt" onclick="addFunc('log(')">log</button>
+
       <button class="opt" onclick="appendOperator('.')">.</button>
       <button class="btn" onclick="appendNumber('0')">0</button>
       <button class="btn" onclick="appendNumber('Pookie')">🎀</button>
       <button class="opt" onclick="appendOperator('+')">+</button>
-      <button class="opt" onclick="appendOperator('-')">−</button>
+      <button class="opt" onclick="appendOperator('−')">−</button>
 
       <button class="equals" onclick="calculateResult()">=</button>
+      <button class="opt" onclick="appendOperator('×')">×</button>
+      <button class="opt" onclick="appendOperator('/')">÷</button>
+      
       <button class="opt" onclick="appendBracket('(')">(</button>
       <button class="opt" onclick="appendBracket(')')">)</button>
+      <button class="opt" onclick="moveCursor(-1)">◀</button>
+      <button class="opt" onclick="moveCursor(1)">▶</button>
+    <button class="clear" onclick="restoreLast()">Back</button>
+
     </div>
   </div>
 
