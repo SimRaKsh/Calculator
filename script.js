@@ -1,86 +1,120 @@
-let expression = "";
-let isDegree = true;
+// script.js
+let expression      = "";
+let lastExpression  = "";
+let isDegree        = true;
+let lastWasResult   = false;
 
-function updateDisplay() {
-  document.getElementById("display").value = expression || "0";
-}
+const display = document.getElementById("display");
 
-document.getElementById("display").addEventListener("input", (e) => {
+display.addEventListener("input", e => {
+  // keep expression in sync if ever edited directly
   expression = e.target.value;
 });
 
-function insertAtCursor(text) {
-  const input = document.getElementById("display");
-
-  expression = input.value;
-
-  const start = input.selectionStart;
-  const end = input.selectionEnd;
-
-  if (expression === "0" && start === end && !isNaN(text)) {
-    expression = text;
-    updateDisplay();
-    setTimeout(() => {
-      input.focus();
-      input.selectionStart = input.selectionEnd = 1;
-    }, 0);
-    return;
-  }
-
-  expression = expression.slice(0, start) + text + expression.slice(end);
-  updateDisplay();
-
+// move caret to a given position
+function focusAt(pos) {
   setTimeout(() => {
-    input.focus();
-    input.selectionStart = input.selectionEnd = start + text.length;
+    display.focus();
+    display.selectionStart = display.selectionEnd = pos;
   }, 0);
 }
 
+function updateDisplay() {
+  display.value = expression || "0";
+}
+
+// insert any text at the current cursor (or end)
+function insertAtCursor(text) {
+  expression = display.value;
+  const start = display.selectionStart;
+  const end   = display.selectionEnd;
+
+  // if just "0" and typing a digit, replace rather than append
+  if (expression === "0" && start === end && /\d/.test(text)) {
+    expression = text;
+  } else {
+    expression = expression.slice(0, start)
+               + text
+               + expression.slice(end);
+  }
+
+  lastWasResult = false;
+  updateDisplay();
+  focusAt(start + text.length);
+}
+
+// wrappers for your buttons
+// replace your appendNumber with:
 function appendNumber(num) {
-  insertAtCursor(num);
+  if (lastWasResult) {
+    // user typed a digit right after "=", so start fresh
+    expression = num;
+    lastWasResult = false;
+  } else {
+    // normal case: append
+    expression += num;
+  }
+  updateDisplay();
 }
-
+// replace your appendOperator with:
 function appendOperator(op) {
-  insertAtCursor(op);
+  if (lastWasResult) {
+    // user pressed operator right after "=", keep the result then chain
+    lastWasResult = false;
+  }
+  expression += op;
+  updateDisplay();
 }
+function appendBracket(b)       { insertAtCursor(b); }
+function addFunc(f)             { insertAtCursor(f); }
 
-function appendBracket(bracket) {
-  insertAtCursor(bracket);
-}
-
-function addFunc(func) {
-  insertAtCursor(func);
-}
-
+// clear everything
 function clearDisplay() {
-  expression = "";
+  expression    = "";
+  lastWasResult = false;
   updateDisplay();
 }
 
+// delete at cursor (or selection)
 function deleteLast() {
-  const input = document.getElementById("display");
-  expression = input.value;
-
-  const start = input.selectionStart;
-  const end = input.selectionEnd;
+  expression = display.value;
+  const start = display.selectionStart;
+  const end   = display.selectionEnd;
 
   if (start === end && start > 0) {
-    expression = expression.slice(0, start - 1) + expression.slice(end);
+    // no selection: delete one char before cursor
+    expression = expression.slice(0, start - 1)
+               + expression.slice(end);
     updateDisplay();
-
-    setTimeout(() => {
-      input.focus();
-      input.selectionStart = input.selectionEnd = start - 1;
-    }, 0);
+    focusAt(start - 1);
   } else if (start !== end) {
-    expression = expression.slice(0, start) + expression.slice(end);
+    // delete entire selection
+    expression = expression.slice(0, start)
+               + expression.slice(end);
     updateDisplay();
-
-    setTimeout(() => {
-      input.focus();
-      input.selectionStart = input.selectionEnd = start;
-    }, 0);
+    focusAt(start);
   }
+
+  lastWasResult = false;
+}
+
+function restoreLast() {
+  if (lastExpression) {
+    expression    = lastExpression;
+    lastWasResult = false;
+    updateDisplay();
+    focusAt(expression.length);
+  }
+}
+
+function moveCursor(direction) {
+  const pos = Math.max(
+    0,
+    Math.min(display.value.length,
+      display.selectionStart + direction
+    )
+  );
+  focusAt(pos);
 }
 
 function toRadians(deg) {
@@ -94,65 +128,38 @@ function toggleMode() {
 
 function calculateResult() {
   try {
+    // save the expression you just evaluated
     lastExpression = expression;
 
-    let finalExpr = expression
-      .replace(/×/g, '*')
-      .replace(/÷/g, '/')
+    // translate your display symbols into valid JS
+    let expr = expression
+      .replace(/×/g, "*")
+      .replace(/÷/g, "/")
       .replace(/sin\(/g, isDegree ? "Math.sin(toRadians(" : "Math.sin(")
       .replace(/cos\(/g, isDegree ? "Math.cos(toRadians(" : "Math.cos(")
       .replace(/tan\(/g, isDegree ? "Math.tan(toRadians(" : "Math.tan(")
       .replace(/log\(/g, "Math.log10(");
 
-    const open = (finalExpr.match(/\(/g) || []).length;
-    const close = (finalExpr.match(/\)/g) || []).length;
-    if (open > close) finalExpr += ")".repeat(open - close);
-
-    const result = eval(finalExpr);
-    expression = parseFloat(result.toFixed(6)).toString();
-  } catch {
+    // evaluate
+    const result = eval(expr);
+    expression   = parseFloat(result.toFixed(6)).toString();
+    lastWasResult = true;
+  } catch (e) {
+    console.error("Calc error:", e);
     expression = "Sorry Pookie";
   }
 
   updateDisplay();
+  focusAt(expression.length);
 }
 
-document.addEventListener("keydown", (e) => {
-  const active = document.activeElement;
-  const isTyping = active.id === "display";
-
-  if (isTyping) return;
-
-  const key = e.key;
-
-  if (/\d/.test(key)) insertAtCursor(key);
-  else if (["+", "-", "*", "/", "."].includes(key)) insertAtCursor(key);
-  else if (key === "Enter") {
-    e.preventDefault();
-    calculateResult();
-  } else if (key === "Backspace") {
-    e.preventDefault();
-    deleteLast();
-  } else if (key === "(" || key === ")") {
-    insertAtCursor(key);
-  }
+// optional: keyboard support
+document.addEventListener("keydown", e => {
+  if (document.activeElement === display) return;
+  const k = e.key;
+  if (/\d/.test(k))        { e.preventDefault(); insertAtCursor(k); }
+  else if ("+-*/.".includes(k)) { e.preventDefault(); insertAtCursor(k); }
+  else if (k === "Enter")  { e.preventDefault(); calculateResult(); }
+  else if (k === "Backspace") { e.preventDefault(); deleteLast(); }
+  else if (k === "(" || k === ")") { e.preventDefault(); insertAtCursor(k); }
 });
-
-function moveCursor(direction) {
-  const input = document.getElementById("display");
-  let pos = input.selectionStart;
-
-  pos = Math.max(0, Math.min(expression.length, pos + direction));
-  setTimeout(() => {
-    input.focus();
-    input.selectionStart = input.selectionEnd = pos;
-  }, 0);
-}
-
-function restoreLast() {
-  if (lastExpression) {
-    expression = lastExpression;
-    updateDisplay();
-  }
-}
-
