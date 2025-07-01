@@ -13,7 +13,8 @@ body {
   padding: 25px;
   border-radius: 20px;
   box-shadow: 0 0 15px rgba(0,0,0,0.3);
-  width: 320px;
+  width: 500px;
+  position: relative;
 }
 
 .display {
@@ -25,6 +26,9 @@ body {
   font-size: 25px;
   height: 30px;
   overflow: hidden;
+  border: none;
+  outline: none;
+  width: 460px;
 }
 
 .buttons {
@@ -34,16 +38,7 @@ body {
 }
 
 .btn {
-  background: #FF92A5;
-  border: none;
-  border-radius: 15px;
-  padding: 15px;
-  font-size: 18px;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-.opt{
-  background: #fba6a6;
+  background: #fc889b;
   border: none;
   border-radius: 15px;
   padding: 15px;
@@ -52,35 +47,30 @@ body {
   transition: background 0.2s;
 }
 
-.opt:hover {
-  background: #FF0833;
-}
-
-.opt:active {
-  background-color: #5DF15D;
-}
-
-.btn:hover {
-  background: #FF0833;
-}
-
-.btn:active {
-  background-color: #5DF15D;
-}
-
-.clear{
+.opt {
+  background: #fc889b;
   border: none;
   border-radius: 15px;
   padding: 15px;
   font-size: 18px;
   cursor: pointer;
   transition: background 0.2s;
+}
+
+.clear {
+  border: none;
+  border-radius: 15px;
+  padding: 15px;
+  font-size: 18px;
+  cursor: pointer;
   background-color: #FF3659;
   color: black;
+  transition: background 0.2s;
 }
-.equals{
+
+.equals {
   grid-column: span 3;
-  background: #fba6a6;
+  background: #fc889b;
   border: none;
   border-radius: 15px;
   padding: 20px;
@@ -89,19 +79,28 @@ body {
   transition: background 0.2s;
 }
 
+.btn:hover,
+.opt:hover,
+.clear:hover,
 .equals:hover {
-  background-color: #FF0833;
+  background: #FF0833;
 }
 
+.btn:active,
+.opt:active,
+.clear:active,
 .equals:active {
   background-color: #5DF15D;
 }
-        
-.clear:hover {
-  background-color: #FF0833;
+
+.mode-toggle {
+  background-color: #fc889b;
+  border: none;
+  padding: 10px 15px;
+  margin-bottom: 10px;
+  border-radius: 15px;
+  font-size: 16px;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 10px;
 }
-        
-.clear:active {
-  background-color: #5DF15D;
-}
- 
