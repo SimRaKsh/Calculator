@@ -2,14 +2,27 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+  />
   <title>Simran Cal</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="calculator">
-    <input class="display" id="display" value="0" readonly onfocus="this.blur()" />
-    <button class="mode-toggle" onclick="toggleMode()"><span id="mode">DEG</span></button>
+    <input
+      id="display"
+    class="display"
+    value="0"
+    tabindex="0"
+    autofocus
+    inputmode="none"
+    />
+
+    <button class="mode-toggle" onclick="toggleMode()">
+      <span id="mode">DEG</span>
+    </button>
 
     <div class="buttons">
       <button class="btn" onclick="appendNumber('7')">7</button>
@@ -38,14 +51,13 @@
 
       <button class="equals" onclick="calculateResult()">=</button>
       <button class="opt" onclick="appendOperator('×')">×</button>
-      <button class="opt" onclick="appendOperator('/')">÷</button>
-      
+      <button class="opt" onclick="appendOperator('÷')">÷</button>
+
       <button class="opt" onclick="appendBracket('(')">(</button>
       <button class="opt" onclick="appendBracket(')')">)</button>
       <button class="opt" onclick="moveCursor(-1)">◀</button>
       <button class="opt" onclick="moveCursor(1)">▶</button>
-    <button class="clear" onclick="restoreLast()">Back</button>
-
+      <button class="clear" onclick="restoreLast()">Back</button>
     </div>
   </div>
 
