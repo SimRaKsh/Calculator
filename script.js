@@ -135,6 +135,7 @@ function calculateResult() {
     let expr = expression
       .replace(/×/g, "*")
       .replace(/÷/g, "/")
+      .replace(/−/g, '-') 
       .replace(/sin\(/g, isDegree ? "Math.sin(toRadians(" : "Math.sin(")
       .replace(/cos\(/g, isDegree ? "Math.cos(toRadians(" : "Math.cos(")
       .replace(/tan\(/g, isDegree ? "Math.tan(toRadians(" : "Math.tan(")
