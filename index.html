@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SiCal</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body> 
+  <div class="container">
+    <div id="card" class="flip-card">
+      
+      <div class="face front">
+      <div class="calculator">
+    <div id="history" class="history-display"></div>
+    <input id="display" class="display" value="0" tabindex="0" autofocus inputmode="none" />
+    
+    <div class="buttons">
+      <button class="mode-toggle" onclick="toggleMode()"><span id="mode">DEG</span></button>
+      <button class="clear" onclick="clearDisplay()">AC</button>
+
+      <button class="btn" onclick="appendNumber('7')">7</button>
+      <button class="btn" onclick="appendNumber('8')">8</button>
+      <button class="btn" onclick="appendNumber('9')">9</button>
+      <button class="clear" onclick="clearCurrent()">C</button>
+      <button class="clear" onclick="deleteLast()">DEL</button>
+
+      <button class="btn" onclick="appendNumber('4')">4</button>
+      <button class="btn" onclick="appendNumber('5')">5</button>
+      <button class="btn" onclick="appendNumber('6')">6</button>
+      <button class="opt" onclick="addFunc('sin')">sin</button>
+      <button class="opt" onclick="addFunc('cos')">cos</button>
+      
+      
+      <button class="btn" onclick="appendNumber('1')">1</button>
+      <button class="btn" onclick="appendNumber('2')">2</button>
+      <button class="btn" onclick="appendNumber('3')">3</button>
+      <button class="opt" onclick="addFunc('tan')">tan</button>
+      <button class="opt" onclick="addFunc('log')">log</button>
+
+      <button class="opt" onclick="appendOperator('.')">.</button>
+      <button class="btn" onclick="appendNumber('0')">0</button>
+      <button class="btn" onclick="flipCard()">🎀</button>
+      <button class="opt" onclick="appendOperator('+')">+</button>
+      <button class="opt" onclick="appendOperator('−')">−</button>
+
+      <button class="equals" onclick="calculateResult()">=</button>
+      <button class="opt" onclick="appendOperator('×')">×</button>
+      <button class="opt" onclick="appendOperator('÷')">÷</button>
+
+      <button class="opt" onclick="appendBracket('(')">(</button>
+      <button class="opt" onclick="appendBracket(')')">)</button>
+      <button class="edit" onclick="editFromHistory()">EDIT</button>
+      <button class="opt" onclick="addFunc('√')">√</button>
+    </div>
+  </div>
+</div>
+    
+      <div class="face back">
+        <div style="color:white; text-align:center; font-size:1.5em; margin-top: 30%;">
+          Scientific Calculator<br><br>🚧 Under Construction 🚧
+          <br><br>
+          <button onclick="flipCard()" style=" background-color: #b3eeb3; color: white; font-size:1.0em; margin-top: 20px; padding: 10px 20px;">🎀</button>
+        </div>
+      </div>
+
+      
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

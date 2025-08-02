@@ -1,0 +1,152 @@
+ html, body {
+      height: 100%; width: 100%; margin: 0; padding: 0;
+      display: flex; justify-content: center; align-items: center;
+      background: white; font-family: Arial, sans-serif;
+    }
+    .container {
+      perspective: 1200px;
+      width: 100vw;
+      height: 100vh;
+    }
+    .flip-card {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transition: transform 0.8s;
+      transform-style: preserve-3d;
+    }
+    .flip-card .face {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+    }
+    .flip-card .front {
+      z-index: 2;
+    }
+    .flip-card .back {
+      background: #fc889b;
+      transform: rotateY(180deg);
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+    .flip-card.flipped {
+      transform: rotateY(180deg);
+    }
+    .calculator {
+      background: #f6bac4;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+    .history-display {
+      background: #f6a6b3;
+      padding: 8px 12px;
+      border-radius: 10px;
+      font-size: 14px;
+      border: none;
+      outline: none;
+      overflow-y: auto;
+      flex-grow: 1;
+      white-space: pre-wrap;
+      margin-bottom: 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end; /* aligns items at the bottom */
+    }
+    .history-line {
+      padding: 4px;
+      border-bottom: 1px solid #ccc;
+      cursor: pointer;
+    }
+    .history-line:last-child {
+      border-bottom: none;
+    }
+    .history-line.selected {
+  background-color: #f77d91;
+  font-weight: bold;
+}
+
+    .display {
+      background: white;
+      font-size: 2.5em;
+      text-align: right;
+      padding: 20px;
+      border: none;
+      margin-bottom: 10px;
+      -webkit-user-modify: read-write-plaintext-only;
+      caret-color: black;
+      flex-shrink: 0;
+      border-radius: 10px;
+    }
+    .mode-toggle {
+      background: #fc889b;
+      padding: 10px;
+      width: 100%;
+      font-size: 16px;
+      border: none;
+      border-radius: 15px;
+      flex-shrink: 0;
+      grid-column: span 4;
+      
+    }
+   
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+      flex-shrink: 0;
+    }
+    button {
+      padding: 20px;
+      font-size: 1.5em;
+      border: none;
+      border-radius: 10px;
+    }
+    .btn, .opt, .clear, .equals, .edit {
+      border: none;
+      border-radius: 15px;
+      font-size: 18px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn, .opt {
+      background: #fc889b;
+      padding: 15px;
+    }
+    .clear {
+      background: #FF3659;
+      padding: 15px;
+      color: black;
+    }
+    .equals {
+      background: #fc889b;
+      padding: 20px;
+      grid-column: span 3;
+    }
+    .edit{
+      background: #fc889b;
+      grid-column: span 2;
+    }
+    .btn:hover, .opt:hover, .clear:hover, .equals:hover, .mode-toggle:hover, .edit:hover {
+      background: #FF0833;
+    }
+    .edit:active, .btn:active, .opt:active, .clear:active, .equals:active, .mode-toggle:active {
+      background: #5DF15D;
+    }
+    @media (max-width: 480px) {
+      .btn, .opt, .clear, .equals {
+        padding: 12px;
+        font-size: 16px;
+      }
+      .display {
+        font-size: 22px;
+        padding: 15px;
+      }
+    }
